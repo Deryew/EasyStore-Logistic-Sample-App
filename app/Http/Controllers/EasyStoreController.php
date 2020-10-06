@@ -9,27 +9,19 @@ use App\Shop;
 class EasyStoreController extends Controller
 {
 
+    // APP client id and client secret from partners portal
     private $client_id;
     private $client_secret;
 
+    // Common app_scopes for logistics app
     private $app_scopes = [
-        'read_script_tags',
-        'write_script_tags',
-        'read_snippets',
-        'write_snippets',
-        'read_customers',
-        'write_customers',
         'read_orders',
         'write_orders',
-        'read_products',
-        'write_products',
-        'read_content',
-        'write_content',
         'read_fulfillments',
         'write_fulfillments',
-        'read_shipping',
         'write_shipping',
-        'read_currencies'
+        'read_customers',
+        'write_locations'
     ];
 
     private $host_url;
@@ -66,14 +58,18 @@ class EasyStoreController extends Controller
         // if (!$hmac_correct) {
         //     return response()->json(['errors' => 'Hmac validate fail'], 400);
         // }
-        return $this->redirectToInstall();
-        $shop = Shop::where('url', $shop_url)
-                    ->where('is_deleted', false)
-                    ->first();
 
-        if (!$shop) {
-            return $this->redirectToInstall();
-        }
+        // return $this->redirectToInstall();
+        // $shop = Shop::where('url', $shop_url)
+        //             ->where('is_deleted', false)
+        //             ->first();
+
+        // if (!$shop) {
+        //     return $this->redirectToInstall();
+        // }
+
+        var_dump(1, env('DATABASE_URL'));
+        var_dump(2, env('EASYSTORE_CLIENT_ID'));
 
         return view('index');
 
