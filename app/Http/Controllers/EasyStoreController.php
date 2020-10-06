@@ -70,6 +70,7 @@ class EasyStoreController extends Controller
 
         var_dump(1, env('DATABASE_URL'));
         var_dump(2, env('EASYSTORE_CLIENT_ID'));
+        var_dump(3, env('DB_PORT'));
 
         return view('index');
 
