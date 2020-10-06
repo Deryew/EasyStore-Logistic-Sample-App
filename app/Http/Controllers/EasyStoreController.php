@@ -59,14 +59,13 @@ class EasyStoreController extends Controller
         //     return response()->json(['errors' => 'Hmac validate fail'], 400);
         // }
 
-        // return $this->redirectToInstall();
-        // $shop = Shop::where('url', $shop_url)
-        //             ->where('is_deleted', false)
-        //             ->first();
+        $shop = Shop::where('url', $shop_url)
+                    ->where('is_deleted', false)
+                    ->first();
 
-        // if (!$shop) {
-        //     return $this->redirectToInstall();
-        // }
+        if (!$shop) {
+            return $this->redirectToInstall();
+        }
 
         var_dump(1, env('DATABASE_URL'));
         var_dump(2, env('EASYSTORE_CLIENT_ID'));
