@@ -10,7 +10,7 @@
 	<script src="https://s3-ap-southeast-1.amazonaws.com/assets.easystore.co/js/uikit.js"></script>
     <script type="text/javascript">
 		EasyStoreApp.init({
-			apiKey: '<?php echo CLIENT_ID; ?>'
+			apiKey: '<?php echo env('EASYSTORE_CLIENT_ID'); ?>'
 		});
 	</script>
 </head>

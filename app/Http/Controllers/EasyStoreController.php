@@ -67,7 +67,9 @@ class EasyStoreController extends Controller
             return $this->redirectToInstall();
         }
 
-        var_dump(3, $shop);
+        var_dump('URL', $shop->url);
+        var_dump('ACCESS_TOKEN', $shop->access_token);
+
 
         return view('index');
 
