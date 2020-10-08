@@ -67,9 +67,7 @@ class EasyStoreController extends Controller
             return $this->redirectToInstall();
         }
 
-        var_dump(1, env('DATABASE_URL'));
-        var_dump(2, env('EASYSTORE_CLIENT_ID'));
-        var_dump(3, env('DB_PORT'));
+        var_dump(3, $shop);
 
         return view('index');
 
