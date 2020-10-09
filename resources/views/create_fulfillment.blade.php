@@ -49,6 +49,30 @@
                             </div>
                         </div>
 
+                        <!-- List Product -->
+                        <div class="table-scroll">
+                            <table class="table-list table-fulfillment">
+                                <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th class="text-weight">Weight(g)</th>
+                                    <th class="text-quantity">Quantity</th>
+                                    <th class="text-amount">Price(Currency)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($order_item as $item)
+                                <tr>
+                                    <td>{{str_limit($item['product_name'], $limit = 30, $end = '...')}}</td>
+                                    <td>{{$item['grams']}}</td>
+                                    <td>{{$item['quantity']}}</td>
+                                    <td>{{$item['price']}}</td>
+                                </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
                         <!-- Other sections    -->
                         <div class="input-wrapper">
                             <label for="list-label">Things to take note: </label>
