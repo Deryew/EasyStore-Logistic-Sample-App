@@ -14,6 +14,7 @@ class EasyStoreController extends Controller
     private $client_id;
     private $client_secret;
     public $cp_url;  // admin URL
+    public $es_app_url;
 
     // Common app_scopes for logistics app
     private $app_scopes = [
@@ -34,12 +35,15 @@ class EasyStoreController extends Controller
         if (env("APP_ENV") == "production") {
             $this->client_id = env('EASYSTORE_CLIENT_ID');
             $this->client_secret = env('EASYSTORE_CLIENT_SECRET');
+            $this->es_app_url = "https://apps.easystore.co";
+            $this->cp_url = 'https://admin.easystore.co';
         } else {
             $this->client_id = env('EASYSTORE_CLIENT_ID_DEV');
             $this->client_secret = env('EASYSTORE_CLIENT_SECRET_DEV');
-        }
+            $this->es_app_url = "https://apps.easystore.blue";
+            $this->cp_url = 'https://admin.easystore.blue';
 
-        $this->cp_url = 'https://admin.easystore.co';
+        }
 
     }
 
@@ -59,10 +63,6 @@ class EasyStoreController extends Controller
         if (!$shop) {
             return $this->redirectToInstall();
         }
-
-        var_dump('URL', $shop->url);
-        var_dump('ACCESS_TOKEN', $shop->access_token);
-
 
         return view('index');
 
@@ -353,7 +353,7 @@ class EasyStoreController extends Controller
 
         $url = 'https://'.$shop->url.'/api/1.0/webhooks.json';
 
-        $webhook_url = "https://" . $_SERVER['SERVER_NAME'] . '/easystore/uninstall';
+        $webhook_url = $this->es_app_url.'/easystore/uninstall';
         $access_token = $shop->access_token;
 
         $data = json_encode([
@@ -379,7 +379,7 @@ class EasyStoreController extends Controller
 
         $url = 'https://'.$shop->url.'/api/1.0/curls.json';
 
-        $curl_url = "https://" . $_SERVER['SERVER_NAME'] . '/easystore/storefront/rates';
+        $curl_url = $this->es_app_url.'/easystore/storefront/rates';
         $access_token = $shop->access_token;
 
         $data = json_encode([
@@ -403,7 +403,7 @@ class EasyStoreController extends Controller
 
     private function redirectToInstall() {
 
-        $redirect_uri = "https://" . $_SERVER['SERVER_NAME'] . $this->redirect_path;
+        $redirect_uri = $this->es_app_url.$this->redirect_path;
 
         $host_url = $this->host_url ?? "https://admin.easystore.co";
 
