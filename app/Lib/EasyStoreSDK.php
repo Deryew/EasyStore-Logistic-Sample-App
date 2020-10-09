@@ -10,7 +10,7 @@ class EasyStore {
 
     protected $header = ['Content-Type: application/json'];
 
-    function __construct($client_id, $client_secret, $shop){
+    public function __construct($client_id, $client_secret, $shop){
 
         $this->client_id = $client_id;
         $this->client_secret = $client_secret;
@@ -18,21 +18,21 @@ class EasyStore {
 
     }
 
-    function generate_hmac($string){
+    public function generate_hmac($string){
 
         return hash_hmac( "sha256", $string, $this->client_secret);
 
 
     }
 
-    function verify_hmac($hmac1, $hmac2){
+    public function verify_hmac($hmac1, $hmac2){
 
         return hash_equals($hmac1, $hmac2);
 
 
     }
 
-    function get_access_token($code){
+    public function get_access_token($code){
 
         $response = $this->call(
             "https://".$this->shop."/api/1.0/oauth/access_token",
@@ -56,13 +56,13 @@ class EasyStore {
 
     }
 
-    function set_access_token($access_token){
+    public function set_access_token($access_token){
 
         $this->header = array_merge($this->header, [ 'easystore-access-token: '.$access_token ]);
 
     }
 
-    function get_store_detail(){
+    public function get_store_detail(){
 
         $response = $this->call(
             "https://".$this->shop."/api/1.0/store.json",
@@ -81,7 +81,7 @@ class EasyStore {
 
     }
 
-    function get_order($order_id){
+    public function get_order($order_id){
 
         $response = $this->call(
             "https://".$this->shop."/api/3.0/orders/".$order_id.".json",
@@ -100,7 +100,7 @@ class EasyStore {
 
     }
 
-    function create_fulfillment($order_id, $fulfillment_params){
+    public function create_fulfillment($order_id, $fulfillment_params){
 
         $response = $this->call(
             "https://".$this->shop."/api/1.0/orders/".$order_id."/fulfillments.json",
@@ -120,7 +120,7 @@ class EasyStore {
 
     }
 
-    function subscribe_webhook($params){
+    public function subscribe_webhook($params){
 
         $response = $this->call(
             "https://".$this->shop."/api/1.0/webhooks.json",
@@ -142,7 +142,7 @@ class EasyStore {
 
     }
 
-    function register_curl($params){
+    public function register_curl($params){
 
         $response = $this->call(
             "https://".$this->shop."/api/1.0/curls.json",
@@ -164,7 +164,7 @@ class EasyStore {
 
     }
 
-    function test_sdk($params) {
+    public function test_sdk($params) {
         return 123;
     }
 
