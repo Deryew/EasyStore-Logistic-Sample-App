@@ -19,8 +19,8 @@
                     <div class="card__section">
                         <header class="section-header section-header--wrap">
                             <div class="header-thumbnail">
-                                {{--Add an icon for your logistic service--}}
-                                <img src="">
+                                <!-- Add an icon for your logistic service -->
+                                <!-- <img src="test.png"> -->
                             </div>
                             <div class="header-action">
                                 <h3 class="card_subtitle">Sample Logistics App Fulfillment</h3>
@@ -42,18 +42,18 @@
                             <div class="input-wrapper">
                                 <label>Amount</label>
                                 <div class="input-group">
-                                    {{--Can be any currency--}}
+                                    <!-- Can be any currency -->
                                     <span class="input-group-addon">MYR</span>
                                     <input class="input-control" type="number" value="{{$total_amount}}" disabled/>
                                 </div>
                             </div>
                         </div>
 
-                        {{--Hidden inputs passed to create fulfillment --}}
+                        <!-- Hidden inputs passed to create fulfillment  -->
                         <input type="hidden" id="shop" name="shop" value="{{$shop}}"></input>
                         <input type="hidden" id="order_id" name="order_id" value="{{$order_id}}"></input>
 
-                        {{--List Product--}}
+                        <!-- List Product -->
                         <div class="table-scroll">
                             <table class="table-list table-fulfillment">
                                 <thead>
@@ -77,7 +77,7 @@
                             </table>
                         </div>
 
-                        {{--Other sections--}}
+                        <!-- Other sections    -->
                         <div class="input-wrapper">
                             <label for="list-label">Things to take note: </label>
                             <ol>
