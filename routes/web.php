@@ -21,4 +21,7 @@ Route::group(['prefix' => 'easystore'], function () {
     Route::get('/', 'EasyStoreController@index');
     Route::get('/install', 'EasyStoreController@install');
     Route::post('/uninstall', 'EasyStoreController@uninstall');
+    Route::get('/rates', 'EasyStoreController@getRatesSF');
+    Route::get('/fulfill', 'EasyStoreController@redirectToFulfillment');
+    Route::post('/fulfillment/create', 'EasyStoreController@createFulfillment');
 });

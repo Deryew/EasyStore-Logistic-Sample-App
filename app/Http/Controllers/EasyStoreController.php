@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Lib\EasyStoreSDK as EasyStore;
 
 use App\Shop;
 
@@ -47,17 +48,6 @@ class EasyStoreController extends Controller
         $hmac = $request->hmac;
 
         $this->host_url = $host_url;
-
-        // if (env("APP_ENV") == "production") {
-        //     $hmac_correct = $this->verifyHmac($hmac, [ "host_url" => $host_url, "shop" => $shop_url, "timestamp" => $timestamp ]);
-        // } else {
-        //     $hmac_correct = $this->verifyHmac($hmac, [ "shop" => $shop_url, "timestamp" => $timestamp ]);
-        // }
-
-
-        // if (!$hmac_correct) {
-        //     return response()->json(['errors' => 'Hmac validate fail'], 400);
-        // }
 
         $shop = Shop::where('url', $shop_url)
                     ->where('is_deleted', false)
@@ -160,6 +150,83 @@ class EasyStoreController extends Controller
 
 
     }
+
+    public function getRatesSF(Request $request) {
+
+        $shipping_rate = [];
+
+        if(!$shop = Store::where('url',$request->shop)->first()) return $this->redirectToInstall();
+
+        if ($request->header('Easystore-Topic') != 'shipping/list/non_cod') {
+            return response()->json(['errors' => 'Topic invalid'], 400);
+        }
+
+        $data = file_get_contents('php://input');
+        $hmac = hash_hmac('sha256', $data, $this->client_secret);
+
+        if ($hmac != $request->header('Easystore-Hmac-Sha256')) {
+            return response()->json(['errors' => 'Hmac validate fail'], 400);
+        }
+
+        /* Format for shipping rate
+
+        id               => unique ID for your shipping service
+        name             => name for your shipping service
+        remark           => remark in the order / fulfillment ('parcel', 'mail', etc)
+        handling_fee     => handling fee for your shipping service
+        shipping_charge  => shipping charge for your shipping service
+        courier_name     => courier name for your shipping service
+        courier_url      => image url for your shipping service
+
+        */
+
+        $sample_shipping1 = [
+            "id" => "ep0001",
+            "name" => "Skynet",
+            "remark" => "",
+            "handling_fee" => 10,
+            "shipping_charge" => 6.00,
+            "courier_name" => "Skynet",
+            "courier_url" => "https://s3-ap-southeast-1.amazonaws.com/easyparcel-static/Public/img/couriers/Skynet.jpg",
+        ];
+
+        array_push($shipping_rate, $sample_shipping1);
+
+        $sample_shipping2 = [
+            "id" => "ep0002",
+            "name" => "PosLaju",
+            "remark" => "",
+            "handling_fee" => 6.50,
+            "shipping_charge" => 0.00,
+            "courier_name" => "PosLaju",
+            "courier_url" => "https://s3-ap-southeast-1.amazonaws.com/easyparcel-static/Public/img/couriers/Pos_Laju.jpg",
+        ];
+
+        array_push($shipping_rate, $sample_shipping2);
+
+
+       return response()->json(['rate' => $shipping_rate], 200);
+
+    }
+
+    public function redirectToFulfillment(Request $request) {
+
+        $input = $request->all();
+
+        dd($input);
+
+        return view('fulfillment', $input);
+
+    }
+
+    public function createFulfillment(Request $request) {
+
+        $input = $request->all();
+
+        dd($input);
+
+    }
+
 
     private function getAccessToken($data) {
 
