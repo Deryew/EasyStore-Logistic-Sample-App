@@ -149,8 +149,7 @@ class EasyStoreController extends Controller
 
     public function getRatesSF(Request $request) {
 
-        $input = $request->all();
-        $this->slack_say("#dy2", json_encode($input));
+        $this->slack_say("#dy2", json_encode($request));
 
         // $store = str_replace("https://", NULL, $request->get('shop'));
 
@@ -160,13 +159,12 @@ class EasyStoreController extends Controller
 
         if(!in_array($topic, ['shipping/list/non_cod'])) return response()->json(["errors" => "Topic invalid"], 400);
 
+        // $data = file_get_contents('php://input');
+        // $hmac = hash_hmac('sha256', $data, $this->client_secret);
 
-        $data = file_get_contents('php://input');
-        $hmac = hash_hmac('sha256', $data, $this->client_secret);
-
-        if ($hmac != $request->header('Easystore-Hmac-Sha256')) {
-            return response()->json(['errors' => 'Hmac validate fail'], 400);
-        }
+        // if ($hmac != $request->header('Easystore-Hmac-Sha256')) {
+        //     return response()->json(['errors' => 'Hmac validate fail'], 400);
+        // }
 
         /* Format for shipping rate
 
