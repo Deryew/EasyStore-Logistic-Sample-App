@@ -315,8 +315,6 @@ class EasyStoreController extends Controller
             'back_to_order' => $this->cp_url.'/orders/'.$order_id,
         ];
 
-        dd($data);
-
         return view('fulfillment_success', $data);
 
     }

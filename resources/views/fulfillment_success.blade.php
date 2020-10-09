@@ -46,30 +46,23 @@
             </div>
             @endif
 
-            {{--May include shipping info--}}
-            @if($shipping_address)
+            <!-- May include shipping info -->
             <div class="shipping-info-wrapper">
 
               <div class="shipping-info">
                 <h3 class="card-subtitle">Shipping Address</h3>
-                <p>{{$shipping_address['province']}}{{$shipping_address['city']}}
-                <br>{{$shipping_address['address1']}} <br>@if(!empty($shipping_address['address2'])){{$shipping_address['address2']}}@endif</p>
+                <p>Sample Shipping Address</p>
               </div>
 
             </div>
-            @endif
           </div>
 
           <div class="card__section">
-            @if(!empty($airwaybill_url))
+            <!-- May include ariwaybill info -->
             <div class="text-left">
-              <a class="btn btn-primary" href="{{$airwaybill_url}}">Download AWB</a>
+              <a class="btn btn-primary" href="">Download AWB</a>
             </div>
-            @endif
             <div class="text-right">
-              @if($status != 'success')
-                <a href="{{ url()->previous() }}" style="margin-right: 20px;">Back</a>
-              @endif
               <a class="btn btn-primary" href="{{$back_to_order}}">Back to Order</a>
             </div>
           </div>
