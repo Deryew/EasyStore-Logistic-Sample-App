@@ -214,6 +214,8 @@ class EasyStoreController extends Controller
         $input = $request->all();
         $shop = Shop::where('url', $input['shop'])->first();
 
+        $this->slack_say("#dy2", json_encode($shop));
+
         if(!$shop) {
             return response()->json(['errors' => 'Shop not found'], 400);
         }
