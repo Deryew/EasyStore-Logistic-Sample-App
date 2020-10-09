@@ -14,7 +14,7 @@
 	<div class="page-layout">
 		<div class="layout layout--1">
 
-            <form action="/fulfillment/create" method="post" class="layout__section">
+            <form action="/easystore/fulfillment/create" method="post" class="layout__section">
                 <div class="card">
                     <div class="card__section">
                         <header class="section-header section-header--wrap">
