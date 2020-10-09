@@ -154,7 +154,7 @@ class EasyStoreController extends Controller
     public function getRatesSF(Request $request) {
 
         $shipping_rate = [];
-        $shop = \str_replace("https://", NULL, $request->get('shop'));
+        $shop = str_replace("https://", NULL, $request->get('shop'));
 
         if(!$shop = Shop::where('url', $shop)->first()) return $this->redirectToInstall();
 
@@ -227,13 +227,12 @@ class EasyStoreController extends Controller
             'client_secret' => $this->client_secret
         ];
 
-        dd($store);
-
         $sdk = new SDK($this->client_id, $this->client_secret, $shop['url']);
-        $sdk->set_access_token($shop['access_token']);
-        $get_order = $sdk->get_order($input['order_id']);
+        $test_sdk = $sdk->test_sdk($store);
+        // $sdk->set_access_token($shop['access_token']);
+        // $get_order = $sdk->get_order($input['order_id']);
 
-        dd($get_order);
+        dd($test_sdk);
 
         return view('fulfillment', $input);
 

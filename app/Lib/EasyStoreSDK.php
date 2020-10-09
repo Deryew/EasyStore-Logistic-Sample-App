@@ -162,6 +162,10 @@ class EasyStore {
 
     }
 
+    function test_sdk($params) {
+        return 123;
+    }
+
     private function call($url, $method, $payload = null){
 
 
