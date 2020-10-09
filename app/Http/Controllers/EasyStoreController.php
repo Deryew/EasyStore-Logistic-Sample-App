@@ -255,6 +255,7 @@ class EasyStoreController extends Controller
             'billing_address'   => $billing_address, // May pass in additional billing address data to obtain receiver details
         ];
 
+        dd($data);
         return view('create_fulfillment', $data);
 
     }
