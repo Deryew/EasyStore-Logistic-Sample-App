@@ -149,24 +149,23 @@ class EasyStoreController extends Controller
 
     public function getRatesSF(Request $request) {
 
-        $shipping_rate = [];
         $input = $request->all();
         $this->slack_say("#dy2", json_encode($input));
 
         $shop = str_replace("https://", NULL, $request->get('shop'));
 
-        // if(!$shop = Shop::where('url', $shop)->first()) return $this->redirectToInstall();
+        if(!$shop = Shop::where('url', $shop)->first()) return $this->redirectToInstall();
 
-        // if ($request->header('Easystore-Topic') != 'shipping/list/non_cod') {
-        //     return response()->json(['errors' => 'Topic invalid'], 400);
-        // }
+        if ($request->header('Easystore-Topic') != 'shipping/list/non_cod') {
+            return response()->json(['errors' => 'Topic invalid'], 400);
+        }
 
-        // $data = file_get_contents('php://input');
-        // $hmac = hash_hmac('sha256', $data, $this->client_secret);
+        $data = file_get_contents('php://input');
+        $hmac = hash_hmac('sha256', $data, $this->client_secret);
 
-        // if ($hmac != $request->header('Easystore-Hmac-Sha256')) {
-        //     return response()->json(['errors' => 'Hmac validate fail'], 400);
-        // }
+        if ($hmac != $request->header('Easystore-Hmac-Sha256')) {
+            return response()->json(['errors' => 'Hmac validate fail'], 400);
+        }
 
         /* Format for shipping rate
 
@@ -180,32 +179,31 @@ class EasyStoreController extends Controller
 
         */
 
-    //     $sample_shipping1 = [
-    //         "id" => "ep0001",
-    //         "name" => "Skynet",
-    //         "remark" => "",
-    //         "handling_fee" => 10,
-    //         "shipping_charge" => 6.00,
-    //         "courier_name" => "Skynet",
-    //         "courier_url" => "https://s3-ap-southeast-1.amazonaws.com/easyparcel-static/Public/img/couriers/Skynet.jpg",
-    //     ];
+        $shipping_rate = [
 
-    //     array_push($shipping_rate, $sample_shipping1);
+            [
+                "id"                => "ep0001",
+                "name"              => "Skynet",
+                "remark"            => "",
+                "handling_fee"      => 10.00,
+                "shipping_charge"   => 6.00,
+                "courier_name"      => "Skynet",
+                "courier_url"       => "https://s3-ap-southeast-1.amazonaws.com/easyparcel-static/Public/img/couriers/Skynet.jpg",
+            ],
+            [
+                "id"                => "ep0002",
+                "name"              => "PosLaju",
+                "remark"            => "",
+                "handling_fee"      => 6.50,
+                "shipping_charge"   => 0.00,
+                "courier_name"      => "PosLaju",
+                "courier_url"       => "https://s3-ap-southeast-1.amazonaws.com/easyparcel-static/Public/img/couriers/Pos_Laju.jpg",
 
-    //     $sample_shipping2 = [
-    //         "id" => "ep0002",
-    //         "name" => "PosLaju",
-    //         "remark" => "",
-    //         "handling_fee" => 6.50,
-    //         "shipping_charge" => 0.00,
-    //         "courier_name" => "PosLaju",
-    //         "courier_url" => "https://s3-ap-southeast-1.amazonaws.com/easyparcel-static/Public/img/couriers/Pos_Laju.jpg",
-    //     ];
+            ]
 
-    //     array_push($shipping_rate, $sample_shipping2);
+        ];
 
-
-    //    return response()->json(['rate' => $shipping_rate], 200);
+       return response()->json(['rate' => $shipping_rate], 200);
 
     }
 
