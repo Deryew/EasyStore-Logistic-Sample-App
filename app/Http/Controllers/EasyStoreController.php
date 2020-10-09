@@ -230,10 +230,10 @@ class EasyStoreController extends Controller
         $sdk = new SDK($this->client_id, $this->client_secret, $shop['url']);
 
         $test_sdk = $sdk->test_sdk($store);
-        // $sdk->set_access_token($shop['access_token']);
-        // $get_order = $sdk->get_order($input['order_id']);
+        $sdk->set_access_token($shop['access_token']);
+        $get_order = $sdk->get_order($input['order_id']);
 
-        dd($test_sdk);
+        dd($get_order);
 
         return view('fulfillment', $input);
 
