@@ -271,7 +271,14 @@ class EasyStoreController extends Controller
 
         $get_order = $sdk->get_order($input['order_id']);
 
-        dd($get_order);
+        // $fulfill_items = [];
+
+        // foreach ($order_item as $key => $value) {
+        //     array_push($fulfill_items, [
+        //         "order_item_id" => $value['id'],
+        //         "quantity" => $value['quantity']
+        //     ]);
+        // }
 
         /* format for fullfillment params
 
@@ -291,9 +298,11 @@ class EasyStoreController extends Controller
             "tracking_url"        => "https://your-app-tracking-urls.com",
             "is_mail"             => 0,
             "message"             => "Download your airway bill <a href='https://airwaybills.com'>here</a>",
-            "line_items"          => json_encode($get_order['order']['line_items'] ),
+            "line_items"          => json_encode($get_order['order']['line_items']),
             "service"             => "Sample Service",
         ];
+
+        dd($fulfillment_params);
 
         $create_fulfillment = $sdk->create_fulfillment($order_id, $fulfillment_params);
 
