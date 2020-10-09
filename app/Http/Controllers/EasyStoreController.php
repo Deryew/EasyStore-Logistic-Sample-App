@@ -276,12 +276,10 @@ class EasyStoreController extends Controller
 
         foreach ($get_order['order']['line_items'] as $key => $value) {
             array_push($fulfill_items, [
-                "order_item_id" => $value['id'],
+                "id" => $value['id'],
                 "quantity" => $value['quantity']
             ]);
         }
-
-        dd($fulfill_items);
 
         /* format for fullfillment params
 
