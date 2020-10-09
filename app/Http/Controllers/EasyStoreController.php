@@ -227,10 +227,12 @@ class EasyStoreController extends Controller
             'client_secret' => $this->client_secret
         ];
 
+        dd($store);
+
         $sdk = new SDK();
-        $sdk->client_id = $this->client_id;
-        $sdk->client_secret = $this->client_secret;
-        $sdk->shop = $shop['url'];
+        // $sdk->client_id = $this->client_id;
+        // $sdk->client_secret = $this->client_secret;
+        // $sdk->shop = $shop['url'];
 
         $test_sdk = $sdk->test_sdk($store);
         // $sdk->set_access_token($shop['access_token']);
