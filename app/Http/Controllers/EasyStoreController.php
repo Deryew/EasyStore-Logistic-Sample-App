@@ -252,7 +252,7 @@ class EasyStoreController extends Controller
             "order_number"      => $order_number,
             "total_amount"      => $total_amount,
             "order_item"        => $order_items,
-            'billing_address'   => $billing_address, // May pass in additional billing address data to obtain receiver details
+            'billing_address'   => $get_order['order']['billing_address'], // May pass in additional billing address data to obtain receiver details
         ];
 
         dd($data);
