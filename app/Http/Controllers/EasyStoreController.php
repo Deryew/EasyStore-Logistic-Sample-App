@@ -155,7 +155,7 @@ class EasyStoreController extends Controller
 
         $shipping_rate = [];
 
-        if(!$shop = Store::where('url',$request->shop)->first()) return $this->redirectToInstall();
+        if(!$shop = Shop::where('url',$request->shop)->first()) return $this->redirectToInstall();
 
         if ($request->header('Easystore-Topic') != 'shipping/list/non_cod') {
             return response()->json(['errors' => 'Topic invalid'], 400);
@@ -212,7 +212,7 @@ class EasyStoreController extends Controller
     public function redirectToFulfillment(Request $request) {
 
         $input = $request->all();
-        $shop = Store::where('url',$input['shop'])->first();
+        $shop = Shop::where('url', $input['shop'])->first();
 
         if(!$shop) {
             return response()->json(['errors' => 'Shop not found'], 400);
