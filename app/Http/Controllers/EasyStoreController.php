@@ -213,7 +213,17 @@ class EasyStoreController extends Controller
 
         $input = $request->all();
 
-        dd($input);
+        if(!$shop = Store::where('url',$input['shop'])->first()) {
+            return response()->json(['errors' => 'Shop not found'], 400);
+        }
+
+        dd($shop);
+
+        $sdk = new EasyStore(env('CLIENT_ID'), env('CLIENT_SECRET'), $shop->url);
+        $sdk->set_access_token($shop->access_token);
+        $get_order = $sdk->get_order($input['order_id']);
+
+        dd($get_order);
 
         return view('fulfillment', $input);
 
