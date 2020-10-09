@@ -122,7 +122,6 @@ class EasyStoreController extends Controller
 
         return redirect()->away($setting_url);
 
-
     }
 
     public function uninstall(Request $request) {
@@ -150,7 +149,6 @@ class EasyStoreController extends Controller
         $shop->save();
 
         return response()->json(['success' => 'Shop deleted successfully.'], 200);
-
 
     }
 
@@ -232,6 +230,8 @@ class EasyStoreController extends Controller
         $get_order = $sdk->get_order($input['order_id']);
         $get_customer = $sdk->get_customer($get_order['order']['customer_id']);
 
+        dd($get_customer);
+
         $order_number = $get_order['order']['order_number']; // EasyStore Order Number
         $total_amount = $get_order['order']['total_amount_include_transaction'];
         $order_items  = $get_order['order']['line_items'];
@@ -244,7 +244,6 @@ class EasyStoreController extends Controller
         } elseif (!empty($get_order['order']['billing_address'])) {
             $address = $get_order['order']['billing_address'];
         }
-
 
         // Common data required for fulfillment
         $data = [
