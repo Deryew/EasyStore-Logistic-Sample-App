@@ -212,8 +212,9 @@ class EasyStoreController extends Controller
     public function redirectToFulfillment(Request $request) {
 
         $input = $request->all();
+        $shop = Store::where('url',$input['shop'])->first();
 
-        if(!$shop = Store::where('url',$input['shop'])->first()) {
+        if(!$shop) {
             return response()->json(['errors' => 'Shop not found'], 400);
         }
 
