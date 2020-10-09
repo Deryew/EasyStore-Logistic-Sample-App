@@ -86,8 +86,6 @@ class EasyStore {
             "GET"
         );
 
-        dd($response);
-
         if(isset($response["order"])){
 
             return $response;
