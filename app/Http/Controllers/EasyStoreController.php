@@ -220,11 +220,11 @@ class EasyStoreController extends Controller
 
         dd($shop);
 
-        $sdk = new EasyStore(env('CLIENT_ID'), env('CLIENT_SECRET'), $shop->url);
-        $sdk->set_access_token($shop->access_token);
-        $get_order = $sdk->get_order($input['order_id']);
+        // $sdk = new EasyStore(env('CLIENT_ID'), env('CLIENT_SECRET'), $shop->url);
+        // $sdk->set_access_token($shop->access_token);
+        // $get_order = $sdk->get_order($input['order_id']);
 
-        dd($get_order);
+        // dd($get_order);
 
         return view('fulfillment', $input);
 
