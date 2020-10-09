@@ -14,6 +14,62 @@
 	<div class="page-layout">
 		<div class="layout layout--1">
 
+            <form action="/fulfillment/create" method="post" class="layout__section">
+                <div class="card">
+                    <div class="card__section">
+                        <header class="section-header section-header--wrap">
+                            <div class="header-thumbnail">
+                                <!-- Add an icon for your logistic service -->
+                                <!-- <img src="test.png"> -->
+                            </div>
+                            <div class="header-action">
+                                <h3 class="card_subtitle">Sample Logistics App Fulfillment</h3>
+                                <p>Fill in this section with a description of your company or logistic services provided.</p>
+                                <p>This is a sample UI for your create fulfillment page.</p>
+                            </div>
+                        </header>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__section">
+                        <h3 class="card-subtitle">Order Information</h3>
+                        <br>
+                        <p>Order Number: {{$order_number}}</p>
+                        <br>
+
+                        <div class="form-group form-group--2">
+                            <div class="input-wrapper">
+                                <label>Amount</label>
+                                <div class="input-group">
+                                    <!-- Can be any currency -->
+                                    <span class="input-group-addon">MYR</span>
+                                    <input class="input-control" type="number" value="{{$total_amount}}" disabled/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Other sections    -->
+                        <div class="input-wrapper">
+                            <label for="list-label">Things to take note: </label>
+                            <ol>
+                                <li>This is a sample only includes order details in this page.</li>
+                                <li>Please modify the content 'data' variable needed to suit your needs.</li>
+                                <li>Other common sections includes information of sender and receiver.</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card__section">
+                    <div class="text-right">
+                        <a class="btn-large btn" onclick="goBack()">Back</a>
+                        <button type="submit" id="fulfill" name="fulfill" class="btn btn-primary btn-large" value="Fulfill">Fulfill</button>
+                    </div>
+                </div>
+
+            </form>
 
 		</div>
 	</div>
