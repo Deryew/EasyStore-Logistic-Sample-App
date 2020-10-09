@@ -264,6 +264,8 @@ class EasyStoreController extends Controller
         // Get inputs from create_fulfillment blade file
         $input = $request->all();
 
+        dd($input);
+
         $shop = Shop::where('url', $input['shop'])->first();
 
         $sdk = new SDK($this->client_id, $this->client_secret, $shop['url']);

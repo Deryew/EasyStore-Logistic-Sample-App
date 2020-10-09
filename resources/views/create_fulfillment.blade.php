@@ -14,7 +14,7 @@
 	<div class="page-layout">
 		<div class="layout layout--1">
 
-            <form action="/easystore/fulfillment/create" method="post" class="layout__section">
+            <form method="POST" action="/easystore/fulfillment/create" class="layout__section">
                 @csrf
                 <div class="card">
                     <div class="card__section">
