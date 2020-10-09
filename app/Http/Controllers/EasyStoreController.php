@@ -13,6 +13,7 @@ class EasyStoreController extends Controller
     // APP client id and client secret from partners portal
     private $client_id;
     private $client_secret;
+    public $cp_url;  // admin URL
 
     // Common app_scopes for logistics app
     private $app_scopes = [
@@ -37,6 +38,8 @@ class EasyStoreController extends Controller
             $this->client_id = env('EASYSTORE_CLIENT_ID_DEV');
             $this->client_secret = env('EASYSTORE_CLIENT_SECRET_DEV');
         }
+
+        $this->cp_url = 'https://admin.easystore.co';
 
     }
 
@@ -219,31 +222,91 @@ class EasyStoreController extends Controller
             return response()->json(['errors' => 'Shop not found'], 400);
         }
 
-        $store = [
-            'url' => $shop['url'],
-            'access_token' => $shop['access_token'],
-            'order_id' => $input['order_id'],
-            'client_id' => $this->client_id,
-            'client_secret' => $this->client_secret
-        ];
-
+        // Initialize SDK
         $sdk = new SDK($this->client_id, $this->client_secret, $shop['url']);
 
-        $test_sdk = $sdk->test_sdk($store);
+        // Set EasyStore access token
         $sdk->set_access_token($shop['access_token']);
+
+        // Use SDK to call EasyStore API
         $get_order = $sdk->get_order($input['order_id']);
+        $get_customer = $sdk->get_customer($get_order['order']['customer_id']);
 
-        dd($get_order);
+        $order_number = $get_order['order']['order_number']; // EasyStore Order Number
+        $total_amount = $get_order['order']['total_amount_include_transaction'];
+        $order_items  = $get_order['order']['line_items'];
 
-        return view('fulfillment', $input);
+        // Get address based on order (may include variable type to determine if order type is pickup / shipping)
+        if(!empty($get_order['order']['pickup_address'])){
+            $address = $get_order['order']['pickup_address']; // customer will pickup the order
+        } elseif(!empty($get_order['order']['shipping_address'])){
+            $address = $get_order['order']['shipping_address']; // merchant will ship the order
+        } elseif (!empty($get_order['order']['billing_address'])) {
+            $address = $get_order['order']['billing_address'];
+        }
+
+
+        // Common data required for fulfillment
+        $data = [
+            "shop"              => $shop['url'],
+            "address"           => $address,
+            "customer"          => $get_customer['customer'],
+            "order_id"          => $input['order_id'],
+            "order_number"      => $order_number,
+            "total_amount"      => $total_amount,
+            "order_item"        => $order_items,
+            'billing_address'   => $billing_address, // May pass in additional billing address data to obtain receiver details
+        ];
+
+        return view('create_fulfillment', $data);
 
     }
 
     public function createFulfillment(Request $request) {
 
+        // Get inputs from create_fulfillment blade file
         $input = $request->all();
 
-        dd($input);
+        $shop = Shop::where('url', $input['shop'])->first();
+
+        $sdk = new SDK($this->client_id, $this->client_secret, $shop['url']);
+        $sdk->set_access_token($shop['access_token']);
+
+        $get_order = $sdk->get_order($input['order_id']);
+
+        /* format for fullfillment params
+
+        tracking_number  => tracking ID
+        tracking_company => courier name
+        tracking_url     => URL for buyer / seller to check the parcel status
+        status           => current status for this fulfillment
+        is_mail          => indicator to send email notification to buyer. send = 1, not to send = 0
+        message          => a short message to display in this order
+        line_items       => list of items (id and quantity only)
+
+        */
+
+        $fulfillment_params = [
+            "tracking_number"     => "EP00011323187924MY",
+            "tracking_company"    => "PosLaju",
+            "tracking_url"        => "https://your-app-tracking-urls.com",
+            "is_mail"             => 0,
+            "message"             => "Download your airway bill <a href='https://airwaybills.com'>here</a>",
+            "line_items"          => json_encode($get_order['order']['line_items'] ),
+            "service"             => "Sample Service",
+        ];
+
+        $create_fulfillment = $sdk->create_fulfillment($order_id, $fulfillment_params);
+
+        // sample data, maybe arrange based on your needs
+        $data = [
+            'order_number' => $get_order['order']['order_number'],
+            'tracking_number' => $fulfillment_params['tracking_number'],
+            'tracking_url'  => $fulfillment_params['tracking_url'],
+            'back_to_order' => $this->cp_url.'/orders/'.$get_order['order']['id'],
+        ];
+
+        return view('fulfillment_success', $data);
 
     }
 
