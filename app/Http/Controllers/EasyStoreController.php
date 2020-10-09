@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Lib\EasyStoreSDK as SDK;
+use App\Lib\EasyStore as SDK;
 
 use App\Shop;
 
