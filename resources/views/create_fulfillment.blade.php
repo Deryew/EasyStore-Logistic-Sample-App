@@ -67,7 +67,7 @@
                                 <tbody>
                                 @foreach ($order_item as $item)
                                 <tr>
-                                    <td>{{$item['product_name']}}</td>
+                                    <td>{{\Illuminate\Support\Str::limit($$item['product_name'], 30, $end='...')}}</td>
                                     <td>{{$item['grams']}}</td>
                                     <td>{{$item['quantity']}}</td>
                                     <td>{{$item['price']}}</td>
@@ -76,6 +76,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        <br><br>
 
                         <!-- Other sections    -->
                         <div class="input-wrapper">
