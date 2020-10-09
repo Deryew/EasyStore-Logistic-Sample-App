@@ -218,7 +218,7 @@ class EasyStoreController extends Controller
             return response()->json(['errors' => 'Shop not found'], 400);
         }
 
-        $sdk = new EasyStore(env('CLIENT_ID'), env('CLIENT_SECRET'), $shop['url']);
+        $sdk = new EasyStore($this->client_id, $this->client_secret, $shop['url']);
         $sdk->set_access_token($shop['access_token']);
         $get_order = $sdk->get_order($input['order_id']);
 
