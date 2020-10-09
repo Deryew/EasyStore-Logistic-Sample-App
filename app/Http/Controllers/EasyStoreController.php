@@ -301,13 +301,11 @@ class EasyStoreController extends Controller
             "message"             => "Download your airway bill <a href='https://airwaybills.com'>here</a>",
             "line_items"          => json_encode($fulfill_items),
             "service"             => "Sample Service",
-            "app_handle"          => "",
+            "app_handle"          => env('APP_HANDLE'),
             "note"                => "",
         ];
 
         $create_fulfillment = $sdk->create_fulfillment($order_id, $fulfillment_params);
-
-        // dd($create_fulfillment);
 
         // sample data, maybe arrange based on your needs
         $data = [
@@ -316,6 +314,8 @@ class EasyStoreController extends Controller
             'tracking_url'  => $fulfillment_params['tracking_url'],
             'back_to_order' => $this->cp_url.'/orders/'.$order_id,
         ];
+
+        dd($data);
 
         return view('fulfillment_success', $data);
 
