@@ -154,8 +154,9 @@ class EasyStoreController extends Controller
     public function getRatesSF(Request $request) {
 
         $shipping_rate = [];
+        $shop = \str_replace("https://", NULL, $request->get('shop'));
 
-        if(!$shop = Shop::where('url',$request->shop)->first()) return $this->redirectToInstall();
+        if(!$shop = Shop::where('url', $shop)->first()) return $this->redirectToInstall();
 
         if ($request->header('Easystore-Topic') != 'shipping/list/non_cod') {
             return response()->json(['errors' => 'Topic invalid'], 400);
