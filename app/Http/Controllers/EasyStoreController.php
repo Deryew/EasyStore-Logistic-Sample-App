@@ -271,6 +271,8 @@ class EasyStoreController extends Controller
 
         $get_order = $sdk->get_order($input['order_id']);
 
+        dd($get_order);
+
         /* format for fullfillment params
 
         tracking_number  => tracking ID
@@ -294,8 +296,6 @@ class EasyStoreController extends Controller
         ];
 
         $create_fulfillment = $sdk->create_fulfillment($order_id, $fulfillment_params);
-
-        dd($create_fulfillment);
 
         // sample data, maybe arrange based on your needs
         $data = [
