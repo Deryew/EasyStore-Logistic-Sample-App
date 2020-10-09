@@ -152,13 +152,14 @@ class EasyStoreController extends Controller
         $input = $request->all();
         $this->slack_say("#dy2", json_encode($input));
 
-        $store = str_replace("https://", NULL, $request->get('shop'));
+        // $store = str_replace("https://", NULL, $request->get('shop'));
 
-        if(!$shop = Shop::where('url', $store)->first()) return $this->redirectToInstall();
+        // if(!$shop = Shop::where('url', $store)->first()) return $this->redirectToInstall();
 
-        if ($request->header('Easystore-Topic') != 'shipping/list/non_cod') {
-            return response()->json(['errors' => 'Topic invalid'], 400);
-        }
+        $topic = $request->header('Easystore-Topic');
+
+        if(!in_array($topic, ['shipping/list/non_cod'])) return response()->json(["errors" => "Topic invalid"], 400);
+
 
         $data = file_get_contents('php://input');
         $hmac = hash_hmac('sha256', $data, $this->client_secret);
