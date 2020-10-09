@@ -377,7 +377,7 @@ class EasyStoreController extends Controller
 
         $url = 'https://'.$shop->url.'/api/1.0/curls.json';
 
-        $curl_url = "https://".$_SERVER['SERVER_NAME'].'/easystore/storefront/rates';
+        $curl_url = 'https://testapp-easystore.herokuapp.com/easystore/storefront/rates';
         $access_token = $shop->access_token;
 
         $data = json_encode([
