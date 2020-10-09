@@ -120,6 +120,7 @@ class EasyStoreController extends Controller
         $shop->save();
 
         $this->subscribeUninstallWebhook($shop);
+        $this->registerCurl($shop);
 
         $host_url = $this->host_url ?? "https://admin.easystore.co";
         $client_id = $this->client_id;
@@ -200,6 +201,32 @@ class EasyStoreController extends Controller
             'webhook' => [
                 'topic' => 'app/uninstall',
                 'url' => $webhook_url,
+            ]
+        ]);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ["EasyStore-Access-Token: $access_token"]);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+    }
+
+    private function registerCurl($shop){
+
+        $url = 'https://'.$shop->url.'/api/1.0/curls.json';
+
+        $curl_url = "https://" . $_SERVER['SERVER_NAME'] . '/easystore/storefront/rates';
+        $access_token = $shop->access_token;
+
+        $data = json_encode([
+            'curl' => [
+                'topic' => 'shipping/list/non_cod',
+                'url' => $curl_url,
             ]
         ]);
 
