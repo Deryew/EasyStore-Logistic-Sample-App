@@ -94,16 +94,33 @@ class EasyStore {
 
         }else{
 
-            throw new Exception("get store detail failed");
+            throw new Exception("get order detail failed");
 
         }
 
     }
 
+    public function get_customer($customer_id){
+
+        $response = $this->call(
+            "https://".$this->shop."/api/3.0/customers/".$customer_id.".json",
+            "GET"
+        );
+
+        if(isset($response["customer"])){
+
+            return $response;
+
+        }else{
+
+            throw new Exception("get customer details failed");
+        }
+    }
+
     public function create_fulfillment($order_id, $fulfillment_params){
 
         $response = $this->call(
-            "https://".$this->shop."/api/1.0/orders/".$order_id."/fulfillments.json",
+            "https://".$this->shop."/api/3.0/orders/".$order_id."/fulfillments.json",
             "POST",
             $fulfillment_params
         );
@@ -114,7 +131,7 @@ class EasyStore {
 
         }else{
 
-            throw new Exception("get store detail failed");
+            throw new Exception("get fulfillment detail failed");
 
         }
 
