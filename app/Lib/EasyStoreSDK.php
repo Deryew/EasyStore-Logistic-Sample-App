@@ -4,19 +4,19 @@ namespace App\Lib;
 
 class EasyStore {
 
-    protected $client_id;
-    protected $client_secret;
-    protected $shop;
+    public $client_id;
+    public $client_secret;
+    public $shop;
 
     protected $header = ['Content-Type: application/json'];
 
-    public function __construct($client_id, $client_secret, $shop){
+    // public function __construct($client_id, $client_secret, $shop){
 
-        $this->client_id = $client_id;
-        $this->client_secret = $client_secret;
-        $this->shop = $shop;
+    //     $this->client_id = $client_id;
+    //     $this->client_secret = $client_secret;
+    //     $this->shop = $shop;
 
-    }
+    // }
 
     public function generate_hmac($string){
 
