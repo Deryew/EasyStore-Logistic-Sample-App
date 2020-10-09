@@ -52,7 +52,6 @@
                         {{--Hidden inputs passed to create fulfillment --}}
                         <input type="hidden" id="shop" name="shop" value="{{$shop}}"></input>
                         <input type="hidden" id="order_id" name="order_id" value="{{$order_id}}"></input>
-                        <input type="hidden" id="token" name="token" value="{{$token}}"></input>
 
                         {{--List Product--}}
                         <div class="table-scroll">
