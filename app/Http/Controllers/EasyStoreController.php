@@ -263,13 +263,14 @@ class EasyStoreController extends Controller
 
         // Get inputs from create_fulfillment blade file
         $input = $request->all();
+        $order_id = $input['order_id'];
 
         $shop = Shop::where('url', $input['shop'])->first();
 
         $sdk = new SDK($this->client_id, $this->client_secret, $shop['url']);
         $sdk->set_access_token($shop['access_token']);
 
-        $get_order = $sdk->get_order($input['order_id']);
+        $get_order = $sdk->get_order($order_id);
 
         $fulfill_items = [];
 
@@ -300,6 +301,8 @@ class EasyStoreController extends Controller
             "message"             => "Download your airway bill <a href='https://airwaybills.com'>here</a>",
             "line_items"          => json_encode($fulfill_items),
             "service"             => "Sample Service",
+            "app_handle"          => "",
+            "note"                => "",
         ];
 
         $create_fulfillment = $sdk->create_fulfillment($order_id, $fulfillment_params);
@@ -311,7 +314,7 @@ class EasyStoreController extends Controller
             'order_number' => $get_order['order']['order_number'],
             'tracking_number' => $fulfillment_params['tracking_number'],
             'tracking_url'  => $fulfillment_params['tracking_url'],
-            'back_to_order' => $this->cp_url.'/orders/'.$get_order['order']['id'],
+            'back_to_order' => $this->cp_url.'/orders/'.$order_id,
         ];
 
         return view('fulfillment_success', $data);
