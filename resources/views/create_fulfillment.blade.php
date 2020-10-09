@@ -15,6 +15,7 @@
 		<div class="layout layout--1">
 
             <form action="/easystore/fulfillment/create" method="post" class="layout__section">
+                @csrf
                 <div class="card">
                     <div class="card__section">
                         <header class="section-header section-header--wrap">
