@@ -264,8 +264,6 @@ class EasyStoreController extends Controller
         // Get inputs from create_fulfillment blade file
         $input = $request->all();
 
-        dd($input);
-
         $shop = Shop::where('url', $input['shop'])->first();
 
         $sdk = new SDK($this->client_id, $this->client_secret, $shop['url']);
@@ -296,6 +294,8 @@ class EasyStoreController extends Controller
         ];
 
         $create_fulfillment = $sdk->create_fulfillment($order_id, $fulfillment_params);
+
+        dd($create_fulfillment);
 
         // sample data, maybe arrange based on your needs
         $data = [
