@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Lib;
+
 class EasyStore {
 
     protected $client_id;
