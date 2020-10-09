@@ -220,7 +220,8 @@ class EasyStoreController extends Controller
 
         $store = [
             'url' => $shop['url'],
-            'access_token' => $shop['access_token']
+            'access_token' => $shop['access_token'],
+            'order_id' => $input['order_id']
         ];
 
         dd($store);
