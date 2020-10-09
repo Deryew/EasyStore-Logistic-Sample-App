@@ -49,6 +49,10 @@
                             </div>
                         </div>
 
+                        <!-- Hidden inputs passed to create fulfillment  -->
+                        <input type="hidden" id="shop" name="shop" value="{{$shop}}"></input>
+                        <input type="hidden" id="order_id" name="order_id" value="{{$order_id}}"></input>
+
                         <!-- List Product -->
                         <div class="table-scroll">
                             <table class="table-list table-fulfillment">
@@ -63,7 +67,7 @@
                                 <tbody>
                                 @foreach ($order_item as $item)
                                 <tr>
-                                    <td>{{str_limit($item['product_name'], $limit = 30, $end = '...')}}</td>
+                                    <td>{{$item['product_name']}}</td>
                                     <td>{{$item['grams']}}</td>
                                     <td>{{$item['quantity']}}</td>
                                     <td>{{$item['price']}}</td>
