@@ -218,17 +218,19 @@ class EasyStoreController extends Controller
             return response()->json(['errors' => 'Shop not found'], 400);
         }
 
-        $store = [
-            'url' => $shop['url'],
-            'access_token' => $shop['access_token'],
-            'order_id' => $input['order_id']
-        ];
+        // $store = [
+        //     'url' => $shop['url'],
+        //     'access_token' => $shop['access_token'],
+        //     'order_id' => $input['order_id']
+        // ];
 
-        dd($store);
+        // dd($store);
 
         $sdk = new EasyStore($this->client_id, $this->client_secret, $shop['url']);
         $sdk->set_access_token($shop['access_token']);
         $get_order = $sdk->get_order($input['order_id']);
+
+        dd($get_order);
 
         return view('fulfillment', $input);
 
