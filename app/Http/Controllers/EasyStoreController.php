@@ -152,7 +152,7 @@ class EasyStoreController extends Controller
         $input = $request->all();
         $this->slack_say("#dy2", json_encode($input));
 
-        $shop = str_replace("https://", NULL, $request->get('shop'));
+        $shop = str_replace("https://", NULL, $request->shop);
 
         if(!$shop = Shop::where('url', $shop)->first()) return $this->redirectToInstall();
 
@@ -377,7 +377,7 @@ class EasyStoreController extends Controller
 
         $url = 'https://'.$shop->url.'/api/1.0/curls.json';
 
-        $curl_url = 'https://testapp-easystore.herokuapp.com/easystore/storefront/rates';
+        $curl_url = "https://".$_SERVER['SERVER_NAME'].'/easystore/storefront/rates';
         $access_token = $shop->access_token;
 
         $data = json_encode([
