@@ -156,6 +156,8 @@ class EasyStoreController extends Controller
     public function getRatesSF(Request $request) {
 
         $this->slack_say("#dy2", $this->shop);
+        $this->slack_say("#dy2", 123);
+
 
         // $shop = Shop::where('url', $input['shop'])->first();
 
@@ -430,7 +432,7 @@ class EasyStoreController extends Controller
         return $hmac === $calculated;
     }
 
-    private function slack_say($channel, $text){
+    public function slack_say($channel, $text){
         $msg = "payload=".json_encode([
             'text' => $text,
             'channel' => $channel,
