@@ -28,7 +28,7 @@ class EasyStoreController extends Controller
 
     private $host_url;
     private $redirect_path = "/easystore/install";
-    private $shop;
+    public $shop;
 
     public function __construct(Request $request){
 
@@ -146,6 +146,8 @@ class EasyStoreController extends Controller
     }
 
     public function getRatesSF(Request $request) {
+
+        $this->slack_say("#dy2", $this->shop);
 
         if(!$shop = Shop::where('url', $this->shop)->first()) return $this->redirectToInstall();
 
