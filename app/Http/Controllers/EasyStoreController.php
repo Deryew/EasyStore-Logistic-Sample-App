@@ -58,6 +58,8 @@ class EasyStoreController extends Controller
         $timestamp = $request->timestamp;
         $hmac = $request->hmac;
 
+        $this->slack_say("#dy2", $this->shop);
+
         $this->host_url = $host_url;
 
         $shop = Shop::where('url', $shop_url)
