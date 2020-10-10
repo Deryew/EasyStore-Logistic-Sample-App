@@ -145,11 +145,39 @@ class EasyStoreController extends Controller
 
     public function getRatesSF(Request $request) {
 
+        $this->slack_say("#dy2", $request);
+
+        $shipping_rate = [
+
+            [
+                "id"                => "ep0001",
+                "name"              => "Skynet",
+                "remark"            => "",
+                "handling_fee"      => 10.00,
+                "shipping_charge"   => 6.00,
+                "courier_name"      => "Skynet",
+                "courier_url"       => "https://s3-ap-southeast-1.amazonaws.com/easyparcel-static/Public/img/couriers/Skynet.jpg",
+            ],
+            [
+                "id"                => "ep0002",
+                "name"              => "PosLaju",
+                "remark"            => "",
+                "handling_fee"      => 6.50,
+                "shipping_charge"   => 0.00,
+                "courier_name"      => "PosLaju",
+                "courier_url"       => "https://s3-ap-southeast-1.amazonaws.com/easyparcel-static/Public/img/couriers/Pos_Laju.jpg",
+
+            ]
+
+        ];
+
+       return response()->json(['rate' => $shipping_rate], 200);
+
         $store = str_replace("https://", NULL, $request->get('shop'));
 
         if(!$shop = Shop::where('url', $store)->first()) return $this->redirectToInstall();
 
-        $this->slack_say("#dy2", $store);
+
 
 
         $topic = $request->header('Easystore-Topic');
