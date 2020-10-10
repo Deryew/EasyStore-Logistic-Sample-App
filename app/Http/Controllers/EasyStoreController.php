@@ -28,6 +28,7 @@ class EasyStoreController extends Controller
 
     private $host_url;
     private $redirect_path = "/easystore/install";
+    private $shop;
 
     public function __construct(Request $request){
 
@@ -73,6 +74,7 @@ class EasyStoreController extends Controller
         $hmac = $request->hmac;
 
         $this->host_url = $host_url;
+        $this->shop = $shop_url;
 
         $hmac_correct = $this->verifyHmac($hmac, [ "code" => $code, "host_url" => $host_url, "shop" => $shop_url, "timestamp" => $timestamp ]);
 
@@ -145,40 +147,9 @@ class EasyStoreController extends Controller
 
     public function getRatesSF(Request $request) {
 
-        $this->slack_say("#dy2", $request);
+        if(!$shop = Shop::where('url', $this->shop)->first()) return $this->redirectToInstall();
 
-        $shipping_rate = [
-
-            [
-                "id"                => "ep0001",
-                "name"              => "Skynet",
-                "remark"            => "",
-                "handling_fee"      => 10.00,
-                "shipping_charge"   => 6.00,
-                "courier_name"      => "Skynet",
-                "courier_url"       => "https://s3-ap-southeast-1.amazonaws.com/easyparcel-static/Public/img/couriers/Skynet.jpg",
-            ],
-            [
-                "id"                => "ep0002",
-                "name"              => "PosLaju",
-                "remark"            => "",
-                "handling_fee"      => 6.50,
-                "shipping_charge"   => 0.00,
-                "courier_name"      => "PosLaju",
-                "courier_url"       => "https://s3-ap-southeast-1.amazonaws.com/easyparcel-static/Public/img/couriers/Pos_Laju.jpg",
-
-            ]
-
-        ];
-
-       return response()->json(['rate' => $shipping_rate], 200);
-
-        $store = str_replace("https://", NULL, $request->get('shop'));
-
-        if(!$shop = Shop::where('url', $store)->first()) return $this->redirectToInstall();
-
-
-
+        $this->slack_say("#dy2", $shop);
 
         $topic = $request->header('Easystore-Topic');
 
