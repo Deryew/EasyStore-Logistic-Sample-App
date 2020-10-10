@@ -35,12 +35,19 @@ class EasyStoreController extends Controller
         if (env("APP_ENV") == "production") {
             $this->client_id = env('EASYSTORE_CLIENT_ID');
             $this->client_secret = env('EASYSTORE_CLIENT_SECRET');
+            $this->cp_url = 'https://admin.easystore.cp';
+
         } else {
             $this->client_id = env('EASYSTORE_CLIENT_ID_DEV');
             $this->client_secret = env('EASYSTORE_CLIENT_SECRET_DEV');
+            if (env("APP_ENV") == "staging")
+                $this->cp_url = 'https://admin.easystore.pink';
+            else
+                $this->cp_url = 'https://admin.easystore.blue';
+
         }
 
-        $this->cp_url = 'https://admin.easystore.co';
+        $this->shop = str_replace(['https://', 'http://'], '', $request->shop);
 
     }
 
@@ -74,7 +81,6 @@ class EasyStoreController extends Controller
         $hmac = $request->hmac;
 
         $this->host_url = $host_url;
-        $this->shop = $shop_url;
 
         $hmac_correct = $this->verifyHmac($hmac, [ "code" => $code, "host_url" => $host_url, "shop" => $shop_url, "timestamp" => $timestamp ]);
 
