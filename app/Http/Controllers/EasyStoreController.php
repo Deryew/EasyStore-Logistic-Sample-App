@@ -145,11 +145,12 @@ class EasyStoreController extends Controller
 
     public function getRatesSF(Request $request) {
 
-        $this->slack_say("#dy2", json_encode($request));
-
         $store = str_replace("https://", NULL, $request->get('shop'));
 
         if(!$shop = Shop::where('url', $store)->first()) return $this->redirectToInstall();
+
+        $this->slack_say("#dy2", $store);
+
 
         $topic = $request->header('Easystore-Topic');
 
