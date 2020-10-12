@@ -53,8 +53,6 @@ class EasyStoreController extends Controller
         $timestamp = $request->timestamp;
         $hmac = $request->hmac;
 
-        $this->slack_say("#dy2", $this->shop);
-
         $this->host_url = $host_url;
 
         $shop = Shop::where('url', $shop_url)
@@ -149,10 +147,6 @@ class EasyStoreController extends Controller
     }
 
     public function getRatesSF(Request $request) {
-
-        $this->slack_say("#dy2", 123);
-        $this->slack_say("#dy2", json_encode($request));
-
 
         // $shop = Shop::where('url', $input['shop'])->first();
 
