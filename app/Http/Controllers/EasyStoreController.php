@@ -155,7 +155,8 @@ class EasyStoreController extends Controller
 
         // if(!$shop = Shop::where('url', $this->shop)->first()) return $this->redirectToInstall();
 
-        // $this->slack_say("#dy2", $shop);
+        $this->slack_say("#dy2", $request->order_token);
+        $this->slack_say("#dy2", 123);
 
         // $topic = $request->header('Easystore-Topic');
 
