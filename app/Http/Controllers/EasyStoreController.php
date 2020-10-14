@@ -187,7 +187,7 @@ class EasyStoreController extends Controller
                 "id"                => "ep0001",
                 "name"              => "Skynet",
                 "remark"            => "",
-                "handling_fee"      => 10.00,
+                "handling_fee"      => 100.00,
                 "shipping_charge"   => 6.00,
                 "courier_name"      => "Skynet",
                 "courier_url"       => "https://s3-ap-southeast-1.amazonaws.com/easyparcel-static/Public/img/couriers/Skynet.jpg",
@@ -197,7 +197,7 @@ class EasyStoreController extends Controller
                 "name"              => "PosLaju",
                 "remark"            => "",
                 "handling_fee"      => 6.50,
-                "shipping_charge"   => 0.00,
+                "shipping_charge"   => 5.00,
                 "courier_name"      => "PosLaju",
                 "courier_url"       => "https://s3-ap-southeast-1.amazonaws.com/easyparcel-static/Public/img/couriers/Pos_Laju.jpg",
 
