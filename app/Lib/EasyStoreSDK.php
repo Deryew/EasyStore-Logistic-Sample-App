@@ -137,6 +137,26 @@ class EasyStore {
 
     }
 
+    public function update_fulfillment($order_id, $fulfillment_id, $fulfillment_params){
+
+        $response = $this->call(
+            "https://".$this->shop."/api/3.0/orders/".$order_id."/fulfillments/".$fulfillment_id.".json",
+            "PUT",
+            $fulfillment_params
+        );
+
+        if(isset($response["fulfillment"])){
+
+            return $response;
+
+        }else{
+
+            throw new Exception("update fulfillment failed");
+
+        }
+
+    }
+
     public function subscribe_webhook($params){
 
         $response = $this->call(
@@ -179,10 +199,6 @@ class EasyStore {
 
         }
 
-    }
-
-    public function test_sdk($params) {
-        return 123;
     }
 
     private function call($url, $method, $payload = null){
