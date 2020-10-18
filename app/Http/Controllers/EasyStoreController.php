@@ -149,18 +149,20 @@ class EasyStoreController extends Controller
     public function getRatesSF(Request $request) {
 
         $this->slack_say(123);
+        $input = $request->all();
 
-        $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
+        // $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
+        $shop_url = $input['shop'];
 
         if(!$shop_url)
             return response()->json(["errors" => "Shop not found"], 400);
 
         if(!$shop = Shop::where('url', $shop_url)->first()) return $this->redirectToInstall();
 
-        $this->slack_say($_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"]);
         $this->slack_say(json_encode($shop));
 
-        $topic = $_SERVER["HTTP_EASYSTORE_TOPIC"];
+        // $topic = $_SERVER["HTTP_EASYSTORE_TOPIC"];
+        $topic = $request->header('Easystore-Topic');
 
         if(!in_array($topic, ['shipping/list/non_cod'])) return response()->json(["errors" => "Topic invalid"], 400);
 
@@ -187,7 +189,7 @@ class EasyStoreController extends Controller
 
             [
                 "id"                => "ep0001",
-                "name"              => "Skynet",
+                "name"              => "Skynet - ".$shop['url'],
                 "remark"            => "",
                 "handling_fee"      => 10.00,
                 "shipping_charge"   => 6.00,
@@ -196,7 +198,7 @@ class EasyStoreController extends Controller
             ],
             [
                 "id"                => "ep0002",
-                "name"              => "PosLaju",
+                "name"              => "PosLaju - ".$shop['access_token'],
                 "remark"            => "",
                 "handling_fee"      => 6.50,
                 "shipping_charge"   => 5.00,
