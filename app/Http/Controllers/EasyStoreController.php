@@ -149,14 +149,15 @@ class EasyStoreController extends Controller
     public function getRatesSF(Request $request) {
 
         // $shop = Shop::where('url', $input['shop'])->first();
+        $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
 
-        // if(!$shop)
-        //     return response()->json(["errors" => "Shop not found"], 400);
+        if(!$shop_url)
+            return response()->json(["errors" => "Shop not found"], 400);
 
-        // if(!$shop = Shop::where('url', $this->shop)->first()) return $this->redirectToInstall();
+        if(!$shop = Shop::where('url', $shop_url)->first()) return $this->redirectToInstall();
 
-        $this->slack_say("#dy2", $request->order_token);
-        $this->slack_say("#dy2", 123);
+        $this->slack_say("#dy2", $shop);
+        $this->slack_say("#dy2", $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"]);
 
         // $topic = $request->header('Easystore-Topic');
 
