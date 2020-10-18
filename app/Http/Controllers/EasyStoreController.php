@@ -148,7 +148,6 @@ class EasyStoreController extends Controller
 
     public function getRatesSF(Request $request) {
 
-        // $shop = Shop::where('url', $input['shop'])->first();
         $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
 
         if(!$shop_url)
@@ -156,19 +155,19 @@ class EasyStoreController extends Controller
 
         if(!$shop = Shop::where('url', $shop_url)->first()) return $this->redirectToInstall();
 
-        $this->slack_say("#dy2", $shop);
-        $this->slack_say("#dy2", $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"]);
+        $this->slack_say($_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"]);
+        $this->slack_say($shop);
 
-        // $topic = $request->header('Easystore-Topic');
+        $topic = $_SERVER["HTTP_EASYSTORE_TOPIC"];
 
-        // if(!in_array($topic, ['shipping/list/non_cod'])) return response()->json(["errors" => "Topic invalid"], 400);
+        if(!in_array($topic, ['shipping/list/non_cod'])) return response()->json(["errors" => "Topic invalid"], 400);
 
-        // $data = file_get_contents('php://input');
-        // $hmac = hash_hmac('sha256', $data, $this->client_secret);
+        $data = file_get_contents('php://input');
+        $hmac = hash_hmac('sha256', $data, $this->client_secret);
 
-        // if ($hmac != $request->header('Easystore-Hmac-Sha256')) {
-        //     return response()->json(['errors' => 'Hmac validate fail'], 400);
-        // }
+        if ($hmac != $request->header('Easystore-Hmac-Sha256')) {
+            return response()->json(['errors' => 'Hmac validate fail'], 400);
+        }
 
         /* Format for shipping rate
 
@@ -423,10 +422,9 @@ class EasyStoreController extends Controller
         return $hmac === $calculated;
     }
 
-    public function slack_say($channel, $text){
+    public function slack_say($text){
         $msg = "payload=".json_encode([
             'text' => $text,
-            'channel' => $channel,
         ]);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://hooks.slack.com/services/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");
