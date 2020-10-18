@@ -148,6 +148,8 @@ class EasyStoreController extends Controller
 
     public function getRatesSF(Request $request) {
 
+        $this->slack_say(123);
+
         $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
 
         if(!$shop_url)
@@ -156,7 +158,7 @@ class EasyStoreController extends Controller
         if(!$shop = Shop::where('url', $shop_url)->first()) return $this->redirectToInstall();
 
         $this->slack_say($_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"]);
-        $this->slack_say($shop);
+        $this->slack_say(json_encode($shop));
 
         $topic = $_SERVER["HTTP_EASYSTORE_TOPIC"];
 
@@ -187,7 +189,7 @@ class EasyStoreController extends Controller
                 "id"                => "ep0001",
                 "name"              => "Skynet",
                 "remark"            => "",
-                "handling_fee"      => 100.00,
+                "handling_fee"      => 10.00,
                 "shipping_charge"   => 6.00,
                 "courier_name"      => "Skynet",
                 "courier_url"       => "https://s3-ap-southeast-1.amazonaws.com/easyparcel-static/Public/img/couriers/Skynet.jpg",
