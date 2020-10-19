@@ -216,6 +216,127 @@ class EasyStoreController extends Controller
 
     }
 
+    public function listPickupMethod(Request $request)
+    {
+        $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
+
+        if(!$shop_url)
+            return response()->json(["errors" => "Shop not found"], 400);
+
+        if(!$shop = Shop::where('url', $shop_url)->first()) return $this->redirectToInstall();
+
+        if ($_SERVER["HTTP_EASYSTORE_TOPIC"] != 'pickup/methods/list') {
+            return response()->json(['errors' => 'Topic invalid'], 400);
+        }
+
+        $data = file_get_contents('php://input');
+        $hmac = hash_hmac('sha256', $data, $this->client_secret);
+
+        if ($hmac != $_SERVER["HTTP_EASYSTORE_HMAC_SHA256"]) {
+            return response()->json(['errors' => 'Hmac validate fail'], 400);
+        }
+
+        $pickup_methods = [];
+
+        $non_cod = [
+            'id'                 => "testapp_ncod",
+            'name'               => "Test App Non COD",
+            'cod_type'           => 0,
+            'pickup_methods_url' => '/apps/easystore/non_cod',
+            'verify_rate_url'    => 'https://testapp-easystore.herokuapp.com/easystore/pickup_verify_rate',
+        ];
+
+        array_push($pickup_methods, $non_cod);
+
+        /* if your logistic service provides COD
+        $cod = [
+            'id'                 => "testapp_cod",
+            'name'               => "Test App CPD",
+            'cod_type'           => 1,
+            'pickup_methods_url' => '/apps/easystore/cod',
+            'verify_rate_url'    => 'https://testapp-easystore.herokuapp.com/easystore/pickup_verify_rate',
+        ];
+
+        array_push($pickup_methods, $cod);
+
+        */
+
+        return $pickup_methods;
+
+    }
+
+    public function pickupIFrame(Request $request)
+    {
+        $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
+        $cart_token = $request->header('x-easystore-cart-token');
+        $order_token = $request->header('x-easystore-order-token');
+
+        if(!$shop_url)
+            return response()->json(["errors" => "Shop not found"], 400);
+
+        if(!$shop = Shop::where('url', $shop_url)->first()) return $this->redirectToInstall();
+
+        // Configure your pickup restrictions
+
+
+        // Sample data
+        $data = [
+            'token' => $cart_token,
+            'shop'  => $shop,
+        ];
+
+        return view('non_cod_location', $data);
+
+    }
+
+    public function pickupVerifyRate(Request $request)
+    {
+
+        if ($_SERVER["HTTP_EASYSTORE_TOPIC"] != 'pickup/verify') {
+            return response()->json(['errors' => 'Topic invalid'], 400);
+        }
+
+        $data = file_get_contents('php://input');
+        $hmac = hash_hmac('sha256', $data, $this->app_secret);
+        $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
+
+        if ($hmac != $_SERVER["HTTP_EASYSTORE_HMAC_SHA256"]) {
+            return response()->json(['errors' => 'Hmac validate fail'], 400);
+        }
+
+        $shop = Shop::where('url', $shop_url)->first();
+
+        // Sample Data
+        $pickup_location = [
+            'name'          => 'Test Point Name',
+            'address1'      => 'Test Address 1',
+            'address2'      => 'Test Address 2',
+            'city'          => 'Test City',
+            'province'      => 'MY-10',
+            'zip'           => '43000',
+            'country_code'  => 'MY',
+            'pickup_charge' => '100.00',
+        ];
+
+        return response()->json($pickup_location, 200);
+
+    }
+
+    public function pickupIFrameRate(Request $request)
+    {
+        // get pickup rate by calling your logistics API and store in DB
+        $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
+
+        $shop = Shop::where('url', $shop_url)->first();
+
+        // sample pickup rate
+        $pickup_rate = "100.00";
+
+        return response()->json([
+            'rate' => $pickup_rate
+        ]);
+    }
+
     public function redirectToFulfillment(Request $request) {
 
         $input = $request->all();
