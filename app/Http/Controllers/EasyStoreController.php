@@ -108,7 +108,9 @@ class EasyStoreController extends Controller
         $shop->save();
 
         $this->subscribeUninstallWebhook($shop);
-        $this->registerCurl($shop);
+        $this->registerShippingCurl($shop);
+        $this->registerVerifyPickupCurl($shop);
+        $this->registerListPickupCurl($shop);
 
         $host_url = $this->host_url ?? "https://admin.easystore.co";
         $client_id = $this->client_id;
@@ -378,7 +380,7 @@ class EasyStoreController extends Controller
 
     }
 
-    private function registerCurl($shop){
+    private function registerShippingCurl($shop){
 
         $url = 'https://'.$shop->url.'/api/1.0/curls.json';
 
@@ -389,6 +391,60 @@ class EasyStoreController extends Controller
             'curl' => [
                 'topic' => 'shipping/list/non_cod',
                 'url' => $curl_url,
+            ]
+        ]);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ["EasyStore-Access-Token: $access_token"]);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+    }
+
+    private function registerListPickupCurl($shop){
+
+        $url = 'https://'.$shop->url.'/api/1.0/curls.json';
+
+        $pickup_method_url = "https://".$_SERVER['SERVER_NAME']."/easystore/pickup_methods";
+
+        $access_token = $shop->access_token;
+
+        $data = json_encode([
+            'curl' => [
+                'topic' => 'pickup/methods/list',
+                'url'   => $pickup_method_url,
+            ]
+        ]);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ["EasyStore-Access-Token: $access_token"]);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+    }
+
+    private function registerVerifyPickupCurl($shop){
+
+        $url = 'https://'.$shop->url.'/api/1.0/curls.json';
+
+        $pickup_verify_url = "https://".$_SERVER['SERVER_NAME']."/easystore/pickup_verify_rate";
+
+        $access_token = $shop->access_token;
+
+        $data = json_encode([
+            'curl' => [
+                'topic' => 'pickup/verify',
+                'url'   => $pickup_verify_url,
             ]
         ]);
 
@@ -432,7 +488,7 @@ class EasyStoreController extends Controller
             'text' => $text,
         ]);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://hooks.slack.com/services/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");
+        curl_setopt($ch, CURLOPT_URL, ENV('SLACK_URL'));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $msg);
