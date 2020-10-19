@@ -220,11 +220,6 @@ class EasyStoreController extends Controller
     {
         $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
 
-        if(!$shop_url)
-            return response()->json(["errors" => "Shop not found"], 400);
-
-        if(!$shop = Shop::where('url', $shop_url)->first()) return $this->redirectToInstall();
-
         if ($_SERVER["HTTP_EASYSTORE_TOPIC"] != 'pickup/methods/list') {
             return response()->json(['errors' => 'Topic invalid'], 400);
         }
