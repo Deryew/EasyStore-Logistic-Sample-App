@@ -216,7 +216,7 @@ class EasyStoreController extends Controller
 
     }
 
-    public function listPickupMethod(Request $request)
+    public function listPickupMethods(Request $request)
     {
         $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
 
