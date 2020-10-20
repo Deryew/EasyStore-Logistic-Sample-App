@@ -43,11 +43,7 @@
                 success: function(d){
                     console.log(d);
                     if (d.rate || d.rate >= 0 ) {
-                        var obj = { status: "success", name: d.name, address: d.address, price: d.rate};
-                        var myJSON = JSON.stringify(obj);
-
-                        var encoded = window.btoa(myJSON)
-                        setCookie("_app_pickup", encoded, 365);
+                        setCookie("_app_pickup", d.cookie_params, 365);
                     } else {
                         if (d.error) {
                             var obj = { status: "error", message: "Unable to pickup."};

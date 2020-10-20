@@ -329,9 +329,12 @@ class EasyStoreController extends Controller
             'json'    => '',
           ];
 
+        $cookie_params = json_encode($pickup_params);
+        $cookie_params = base64_encode($cookie_params);
 
         return response()->json([
-            'rate' => $pickup_params
+            'rate'          => $pickup_rate,
+            'cookie_params' => $cookie_params
         ]);
     }
 
