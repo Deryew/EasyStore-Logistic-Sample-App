@@ -237,7 +237,7 @@ class EasyStoreController extends Controller
             'id'                 => "testapp_ncod",
             'name'               => $_SERVER["HTTP_EASYSTORE_TOPIC"]." ".$shop_url,
             'cod_type'           => 0,
-            'pickup_methods_url' => '/apps/easystore/non_cod',
+            'pickup_methods_url' => 'https://'.$shop_url.'/apps/easystore/non_cod',
             'verify_rate_url'    => 'https://testapp-easystore.herokuapp.com/easystore/pickup_verify_rate',
         ];
 
