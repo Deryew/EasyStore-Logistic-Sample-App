@@ -237,13 +237,13 @@ class EasyStoreController extends Controller
             'id'                 => "testapp_ncod",
             'name'               => $_SERVER["HTTP_EASYSTORE_TOPIC"]." ".$shop_url,
             'cod_type'           => 0,
-            'pickup_methods_url' => 'https://'.$shop_url.'/apps/easystore/non_cod',
+            'pickup_methods_url' => '/apps/easystore/non_cod',
             'verify_rate_url'    => 'https://testapp-easystore.herokuapp.com/easystore/pickup_verify_rate',
         ];
 
         array_push($pickup_methods, $non_cod);
 
-        /* if your logistic service provides COD
+        // if your logistic service provides COD
         $cod = [
             'id'                 => "testapp_cod",
             'name'               => "Test App CPD",
@@ -253,8 +253,6 @@ class EasyStoreController extends Controller
         ];
 
         array_push($pickup_methods, $cod);
-
-        */
 
         return response()->json(['methods' => $pickup_methods], 200);
 
