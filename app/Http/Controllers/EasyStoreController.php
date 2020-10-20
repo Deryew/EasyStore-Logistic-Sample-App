@@ -288,12 +288,12 @@ class EasyStoreController extends Controller
             return response()->json(['errors' => 'Topic invalid'], 400);
         }
 
-        $data = file_get_contents('php://input');
-        $hmac = hash_hmac('sha256', $data, $this->app_secret);
+        // $data = file_get_contents('php://input');
+        // $hmac = hash_hmac('sha256', $data, $this->app_secret);
 
-        if ($hmac != $_SERVER["HTTP_EASYSTORE_HMAC_SHA256"]) {
-            return response()->json(['errors' => 'Hmac validate fail'], 400);
-        }
+        // if ($hmac != $_SERVER["HTTP_EASYSTORE_HMAC_SHA256"]) {
+        //     return response()->json(['errors' => 'Hmac validate fail'], 400);
+        // }
 
         // Sample Data
         $pickup_location['location'] = [
