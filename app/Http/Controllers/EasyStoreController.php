@@ -218,24 +218,24 @@ class EasyStoreController extends Controller
 
     public function listPickupMethods(Request $request)
     {
-        $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
+        // $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
 
-        if ($_SERVER["HTTP_EASYSTORE_TOPIC"] != 'pickup/methods/list') {
-            return response()->json(['errors' => 'Topic invalid'], 400);
-        }
+        // if ($_SERVER["HTTP_EASYSTORE_TOPIC"] != 'pickup/methods/list') {
+        //     return response()->json(['errors' => 'Topic invalid'], 400);
+        // }
 
-        $data = file_get_contents('php://input');
-        $hmac = hash_hmac('sha256', $data, $this->client_secret);
+        // $data = file_get_contents('php://input');
+        // $hmac = hash_hmac('sha256', $data, $this->client_secret);
 
-        if ($hmac != $_SERVER["HTTP_EASYSTORE_HMAC_SHA256"]) {
-            return response()->json(['errors' => 'Hmac validate fail'], 400);
-        }
+        // if ($hmac != $_SERVER["HTTP_EASYSTORE_HMAC_SHA256"]) {
+        //     return response()->json(['errors' => 'Hmac validate fail'], 400);
+        // }
 
         $pickup_methods = [];
 
         $non_cod = [
             'id'                 => "testapp_ncod",
-            'name'               => "Test App Non COD",
+            'name'               => $_SERVER["HTTP_EASYSTORE_TOPIC"]." ".$shop_url,
             'cod_type'           => 0,
             'pickup_methods_url' => '/apps/easystore/non_cod',
             'verify_rate_url'    => 'https://testapp-easystore.herokuapp.com/easystore/pickup_verify_rate',
