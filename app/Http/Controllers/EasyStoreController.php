@@ -305,7 +305,9 @@ class EasyStoreController extends Controller
             'zip'           => '43000',
             'country_code'  => 'MY',
             'pickup_charge' => '100.00',
-            'request'       => $request->all()
+            'request'       => "",
+            'topic'         => $request->header('Easystore-Topic'),
+            'hmac'          => $request->header('Easystore-Hmac-Sha256')
         ];
 
         return response()->json($pickup_location, 200);
