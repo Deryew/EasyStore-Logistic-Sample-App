@@ -274,8 +274,6 @@ class EasyStoreController extends Controller
 
         // Sample data
         $data = [
-            // 'token' => $cart_token,
-            // 'shop'  => $shop,
             'url' => $shop_url
         ];
 
