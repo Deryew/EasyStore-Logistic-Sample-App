@@ -43,7 +43,7 @@
                 success: function(d){
                     console.log(d);
                     if (d.rate || d.rate >= 0 ) {
-                        var obj = { status: "success", name: data.name, address: address1, price: d.rate};
+                        var obj = { status: "success", name: d.name, address: address1, price: d.rate};
                         var myJSON = JSON.stringify(obj);
 
                         var encoded = window.btoa(myJSON)
