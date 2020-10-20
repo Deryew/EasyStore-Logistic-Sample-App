@@ -29,7 +29,7 @@
             xhr = $.ajax({
                 type: 'post',
                 async: true,
-                url: '/apps/easystore/pickup-rate'
+                url: '/apps/easystore/pickup-rate',
                 data: {
                     // your data
                     test: "test"
