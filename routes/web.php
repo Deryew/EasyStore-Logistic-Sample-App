@@ -31,7 +31,7 @@ Route::group(['prefix' => 'easystore'], function () {
     // Pickup Rates
     Route::post('/pickup_verify_rate', 'EasyStoreController@pickupVerifyRate');
     Route::get('/proxy/non-cod', 'EasyStoreController@pickupIFrame');
-    // Route::get('/proxy/cod', 'EasyStoreController@pickupIFrame');
+    Route::get('/proxy/cod', 'EasyStoreController@pickupIFrame');
     Route::post('/proxy/pickup-rate', 'EasyStoreController@pickupiFrameRate');
     Route::get('/proxy/pickup-rate', 'EasyStoreController@pickupIFrameRate');
 
