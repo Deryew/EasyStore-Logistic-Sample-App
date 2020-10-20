@@ -284,12 +284,23 @@ class EasyStoreController extends Controller
     public function pickupVerifyRate(Request $request)
     {
 
+        $data = file_get_contents('php://input');
+        $hmac = hash_hmac('sha256', $data, $this->app_secret);
+
+        $data = [
+            'hmac' => $hmac,
+            'other_hmac' => $request->header('Easystore-Hmac-Sha256')
+        ];
+
+
         if ($request->header('Easystore-Topic') != 'pickup/verify') {
+
+
+            return response()->json($data, 200);
+
             return response()->json(['errors' => 'Topic invalid'], 400);
         }
 
-        $data = file_get_contents('php://input');
-        $hmac = hash_hmac('sha256', $data, $this->app_secret);
 
         // if ($hmac != $_SERVER["HTTP_EASYSTORE_HMAC_SHA256"]) {
         //     return response()->json(['errors' => 'Hmac validate fail'], 400);
