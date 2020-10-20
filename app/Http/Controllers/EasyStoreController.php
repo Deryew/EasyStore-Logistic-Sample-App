@@ -260,7 +260,7 @@ class EasyStoreController extends Controller
 
     public function pickupIFrame(Request $request)
     {
-        // $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
+        $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
         // $cart_token = $request->header('x-easystore-cart-token');
         // $order_token = $request->header('x-easystore-order-token');
 
@@ -276,6 +276,7 @@ class EasyStoreController extends Controller
         $data = [
             // 'token' => $cart_token,
             // 'shop'  => $shop,
+            'url' => $shop_url
         ];
 
         return view('non_cod_location', $data);
