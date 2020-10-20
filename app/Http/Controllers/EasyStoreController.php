@@ -150,29 +150,23 @@ class EasyStoreController extends Controller
 
     public function getRatesSF(Request $request) {
 
-        $this->slack_say(123);
-        $input = $request->all();
-
         $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
-        // $shop_url = $input['shop'];
 
         if(!$shop_url)
             return response()->json(["errors" => "Shop not found"], 400);
 
         if(!$shop = Shop::where('url', $shop_url)->first()) return $this->redirectToInstall();
 
-        $this->slack_say(json_encode($shop));
-
-        $topic = $_SERVER["HTTP_EASYSTORE_TOPIC"];
-        // $topic = $request->header('Easystore-Topic');
+        // $topic = $_SERVER["HTTP_EASYSTORE_TOPIC"];
+        $topic = $request->header('Easystore-Topic');
 
         if(!in_array($topic, ['shipping/list/non_cod'])) return response()->json(["errors" => "Topic invalid"], 400);
 
         $data = file_get_contents('php://input');
         $hmac = hash_hmac('sha256', $data, $this->client_secret);
 
-        if ($hmac != $_SERVER["HTTP_EASYSTORE_HMAC_SHA256"]) {
-        // if ($hmac != $request->header('Easystore-Hmac-Sha256')) {
+        // if ($hmac != $_SERVER["HTTP_EASYSTORE_HMAC_SHA256"]) {
+        if ($hmac != $request->header('Easystore-Hmac-Sha256')) {
             return response()->json(['errors' => 'Hmac validate fail'], 400);
         }
 
@@ -288,6 +282,8 @@ class EasyStoreController extends Controller
             return response()->json(['errors' => 'Topic invalid'], 400);
         }
 
+
+        /* GOT ISSUE WITH THIS FUNCTION*/
         // $data = file_get_contents('php://input');
         // $hmac = hash_hmac('sha256', $data, $this->app_secret);
 
