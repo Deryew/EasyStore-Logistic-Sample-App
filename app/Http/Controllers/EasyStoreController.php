@@ -289,8 +289,11 @@ class EasyStoreController extends Controller
 
         $data = [
             'hmac' => $hmac,
-            'other_hmac' => $request->header('Easystore-Hmac-Sha256')
+            'other_hmac' => $request->header('Easystore-Hmac-Sha256'),
+            'topic' => $request->header('Easystore-Topic')
         ];
+
+        return response()->json($data, 200);
 
 
         if ($request->header('Easystore-Topic') != 'pickup/verify') {
