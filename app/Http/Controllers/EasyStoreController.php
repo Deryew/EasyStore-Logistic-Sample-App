@@ -290,13 +290,10 @@ class EasyStoreController extends Controller
 
         $data = file_get_contents('php://input');
         $hmac = hash_hmac('sha256', $data, $this->app_secret);
-        $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
 
         if ($hmac != $_SERVER["HTTP_EASYSTORE_HMAC_SHA256"]) {
             return response()->json(['errors' => 'Hmac validate fail'], 400);
         }
-
-        $shop = Shop::where('url', $shop_url)->first();
 
         // Sample Data
         $pickup_location = [
