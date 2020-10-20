@@ -25,13 +25,11 @@
 
         var xhr = $.ajax();
 
-        var url = <?php echo $url; ?>;
-
         function get_location(){
             xhr = $.ajax({
                 type: 'post',
                 async: true,
-                url: 'https://'.url.'/apps/easystore/pickup-rate',
+                url: '/apps/easystore/pickup-rate',
                 data: {
                     // your data
                     test: "test"
