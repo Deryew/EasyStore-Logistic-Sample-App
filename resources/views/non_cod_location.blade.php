@@ -31,7 +31,7 @@
             xhr = $.ajax({
                 type: "post",
                 async: true,
-                url: "https://"+window.location.hostname+"/apps/easystore/pickup-rate",
+                url: "https://testapp-easystore.herokuapp.com/easystore/pickup-rate",
                 dataType: "json",
                 data: {
                     // your data
