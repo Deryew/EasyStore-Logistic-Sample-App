@@ -317,9 +317,6 @@ class EasyStoreController extends Controller
     public function pickupIFrameRate(Request $request)
     {
         // get pickup rate by calling your logistics API and store in DB
-        $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
-
-        $shop = Shop::where('url', $shop_url)->first();
 
         // sample pickup rate
         $pickup_rate = "100.00";
