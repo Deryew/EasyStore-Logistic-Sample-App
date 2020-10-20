@@ -254,9 +254,9 @@ class EasyStoreController extends Controller
 
     public function pickupIFrame(Request $request)
     {
-        // $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
-        // $cart_token = $request->header('x-easystore-cart-token');
-        // $order_token = $request->header('x-easystore-order-token');
+        $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
+        $cart_token = $request->header('x-easystore-cart-token');
+        $order_token = $request->header('x-easystore-order-token');
 
         // if(!$shop_url)
         //     return response()->json(["errors" => "Shop not found"], 400);
