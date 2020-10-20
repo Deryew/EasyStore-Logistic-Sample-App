@@ -296,7 +296,7 @@ class EasyStoreController extends Controller
         // }
 
         // Sample Data
-        $pickup_location = [
+        $pickup_location['location'] = [
             'name'          => 'Test Point Name',
             'address1'      => 'Test Address 1',
             'address2'      => 'Test Address 2',
