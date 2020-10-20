@@ -23,16 +23,16 @@ Route::group(['prefix' => 'easystore'], function () {
     Route::post('/uninstall', 'EasyStoreController@uninstall');
     Route::get('/fulfill', 'EasyStoreController@redirectToFulfillment');
     Route::post('/fulfillment/create', 'EasyStoreController@createFulfillment');
-    Route::post('/pickup_methods', 'Controller@listPickupMethods');
+    Route::post('/pickup_methods', 'EasyStoreController@listPickupMethods');
 
     // Shipping Rates
     Route::post('/storefront/rates', 'EasyStoreController@getRatesSF');
 
     // Pickup Rates
-    Route::post('/pickup_verify_rate', 'Controller@pickupVerifyRate');
-    Route::get('/proxy/non-cod', 'Controller@pickupIFrame');
-    // Route::get('/proxy/cod', 'Controller@pickupIFrame');
-    Route::post('/proxy/pickup-rate', 'Controller@pickupiFrameRate');
+    Route::post('/pickup_verify_rate', 'EasyStoreController@pickupVerifyRate');
+    Route::get('/proxy/non-cod', 'EasyStoreController@pickupIFrame');
+    // Route::get('/proxy/cod', 'EasyStoreController@pickupIFrame');
+    Route::post('/proxy/pickup-rate', 'EasyStoreController@pickupiFrameRate');
 
 
 
