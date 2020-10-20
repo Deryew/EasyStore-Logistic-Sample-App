@@ -321,8 +321,17 @@ class EasyStoreController extends Controller
         // sample pickup rate
         $pickup_rate = "100.00";
 
+        $pickup_params = [
+            'status'  => 'success',
+            'name'    => 'Test Point Name',
+            'address' => 'Test Address 1, Test Address 2',
+            'price'   => $pickup_rate,
+            'json'    => '',
+          ];
+
+
         return response()->json([
-            'rate' => $pickup_rate
+            'rate' => $pickup_params
         ]);
     }
 
