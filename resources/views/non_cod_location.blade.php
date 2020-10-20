@@ -25,11 +25,14 @@
 
         var xhr = $.ajax();
 
+        console.log(window.location.hostname);
+
         function get_location(){
             xhr = $.ajax({
-                type: 'post',
+                type: "post",
                 async: true,
-                url: 'https://'.window.location.hostname.'/apps/easystore/pickup-rate',
+                url: "https://"+window.location.hostname+"/apps/easystore/pickup-rate",
+                dataType: "json",
                 data: {
                     // your data
                     test: "test"
