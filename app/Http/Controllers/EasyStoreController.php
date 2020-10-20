@@ -218,7 +218,7 @@ class EasyStoreController extends Controller
 
     public function listPickupMethods(Request $request)
     {
-        // $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
+        $shop_url = $_SERVER["HTTP_EASYSTORE_SHOP_DOMAIN"];
 
         // if ($_SERVER["HTTP_EASYSTORE_TOPIC"] != 'pickup/methods/list') {
         //     return response()->json(['errors' => 'Topic invalid'], 400);
