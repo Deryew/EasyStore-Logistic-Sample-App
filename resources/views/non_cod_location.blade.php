@@ -32,7 +32,7 @@
                 type: "post",
                 async: true,
                 url: "https://testapp-easystore.herokuapp.com/easystore/pickup-rate",
-                dataType: "json",
+                dataType: "jsonp",
                 data: {
                     // your data
                     test: "test"
