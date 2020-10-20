@@ -234,7 +234,7 @@ class EasyStoreController extends Controller
         $pickup_methods = [];
 
         $non_cod = [
-            'id'                 => "testapp_ncod",
+            'id'                 => "noncod",
             'name'               => $shop_url,
             'cod_type'           => 0,
             'pickup_methods_url' => 'https://'.$shop_url.'/apps/easystore/non-cod',
@@ -245,7 +245,7 @@ class EasyStoreController extends Controller
 
         // if your logistic service provides COD
         $cod = [
-            'id'                 => "testapp_cod",
+            'id'                 => "cod",
             'name'               => "Test App CPD",
             'cod_type'           => 1,
             'pickup_methods_url' => '/apps/easystore/cod',
