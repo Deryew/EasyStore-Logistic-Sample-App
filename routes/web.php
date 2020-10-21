@@ -34,6 +34,7 @@ Route::group(['prefix' => 'easystore'], function () {
     Route::get('/proxy/cod', 'EasyStoreController@pickupIFrame');
     Route::post('/proxy/pickup-rate', 'EasyStoreController@pickupiFrameRate');
     Route::get('/proxy/pickup-rate', 'EasyStoreController@pickupIFrameRate');
+    Route::get('proxy/tracking', 'EasyStoreController@orderTracking');
 
 
 

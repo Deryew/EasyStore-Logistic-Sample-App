@@ -439,6 +439,40 @@ class EasyStoreController extends Controller
 
     }
 
+    public function orderTracking(Request $request) {
+
+        $content = <<< HTML
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<style>.ept-wrapper{max-width:500px;margin:0 auto 50px}.ept-title{color:#3c3c3c;margin-bottom:20px}.ept-card{border:solid 1px #eee;border-radius:3px}.ept-card-title{padding:25px 30px;color:#3c3c3c;background-color:#eee}.ept-card-title h2{margin:0 0 15px;font-weight:400}.ept-card-title .ept-date{color:#777}.ept-card-body{display:flex;flex-wrap:wrap}.ept-card-body .ept-info{flex-grow:1;padding:25px 0 0 30px}.ept-card-body .ept-info label{color:#777;display:block;margin-bottom:7px}.ept-card-body .ept-info label i{margin-right:5px}.ept-card-body .ept-info h3{margin:0;font-weight:400;color:#3c3c3c}.ept-card-body .ept-info:last-child{flex-basis:100%;padding:25px 0 25px 30px}</style>
+<div class="ept-wrapper">
+	<h1 class="ept-title">Sample Logistic App Tracking</h1>
+	<div class="ept-card">
+		<div class="ept-card-title">
+			<h2>Sample Tracking Number</h2>
+			<span class="ept-date" style="font-size:25px">Sample Response Code / Message<br>Sample Status Date</span>
+		</div>
+		<div class="ept-card-body">
+			<div class="ept-info">
+				<label style="font-size:20px"><b><i class="fa fa-sticky-note" aria-hidden="true"></i>Order Number</b></label>
+				<h3>#1234</h3>
+			</div>
+			<div class="ept-info">
+				<label style="font-size:20px"><b><i class="fa fa-user" aria-hidden="true"></i>Receiver Name</b></label>
+				<h3>Sample Receiver Name</h3>
+			</div>
+			<div class="ept-info">
+				<label style="font-size:20px"><b><i class="fa fa-truck" aria-hidden="true"></i>Address</b></label>
+				<h3>Sample Receiver Address</h3>
+			</div>
+		</div>
+	</div>
+</div>
+HTML;
+
+        return $content;
+
+    }
+
 
     private function getAccessToken($data) {
 
