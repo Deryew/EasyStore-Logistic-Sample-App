@@ -229,7 +229,7 @@ class EasyStoreController extends Controller
 
         $non_cod = [
             'id'                 => "noncod",
-            'name'               => $shop_url,
+            'name'               => "Sample Logistic App Pickup",
             'cod_type'           => 0,
             'pickup_methods_url' => 'https://'.$shop_url.'/apps/easystore/non-cod',
             'verify_rate_url'    => 'https://testapp-easystore.herokuapp.com/easystore/pickup_verify_rate',
@@ -240,7 +240,7 @@ class EasyStoreController extends Controller
         // if your logistic service provides COD
         $cod = [
             'id'                 => "cod",
-            'name'               => "Test App CPD",
+            'name'               => "Sample Logistic App Pickup COD",
             'cod_type'           => 1,
             'pickup_methods_url' => '/apps/easystore/cod',
             'verify_rate_url'    => 'https://testapp-easystore.herokuapp.com/easystore/pickup_verify_rate',
